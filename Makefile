@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 NAME = philo
-SRC = philo.c
+SRC = philo.c tools.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -10,7 +10,6 @@ all: $(OBJ) $(NAME)
 
 $(NAME):
 	@CC $(CFLAGS) -o $(NAME) $(SRC)
-	@ar rc $(NAME) $(OBJ)
 	@echo "done"
 
 clean:

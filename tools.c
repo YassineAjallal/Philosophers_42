@@ -6,17 +6,25 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:18:47 by yajallal          #+#    #+#             */
-/*   Updated: 2023/02/19 22:19:36 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/02/19 22:53:13 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+int	ft_isdigit(int c)
 {
-	int				i;
-	int				signe;
-	long long int	res;
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
+
+int	ft_atoi(char *str)
+{
+	int		i;
+	int		signe;
+	int	res;
 
 	i = 0;
 	signe = 1;
