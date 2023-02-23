@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/02/19 22:51:52 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:55:17 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include <sys/time.h>
 
 typedef struct s_philo {
+	pthread_t *philo;
+	pthread_mutex_t *fork;
 	int	nb_philo;
 	int time_die;
 	int time_eat;
@@ -28,10 +30,15 @@ typedef struct s_philo {
 	int nb_times;
 } t_philo;
 
+typedef struct 
+
 int	ft_atoi(char *str);
 int	ft_isdigit(int c);
 
 void init_philo(t_philo *philo, char **av);
 int check_arg(t_philo *philo);
+
+int create_thread(t_philo *philo);
+
 
 #endif

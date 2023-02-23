@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 NAME = philo
-SRC = philo.c tools.c
+SRC = philo.c tools.c create_threads.c
 
 OBJ = $(SRC:.c=.o)
 

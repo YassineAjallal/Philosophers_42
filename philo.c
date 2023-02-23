@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/02/19 22:54:50 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/02/20 18:41:05 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int main(int ac, char **av)
 		printf("-----------------------------------------------------\n\n");
 		return (0);
 	}
-	printf("Success\n");
+	printf("success\n");
+	create_thread(philo);
 	return (0);
 }
