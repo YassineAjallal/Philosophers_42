@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/02/23 12:33:28 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/02/24 18:39:18 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct s_details {
 	pthread_t thread;
 	int id;
 	int status;
+	pthread_mutex_t *fork;
+	int	nb_philo;
 } t_details;
 
 typedef struct s_philo {
