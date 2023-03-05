@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/05 14:09:55 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/05 14:15:23 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void init_philo(t_philo *philo, char **av)
 	if (av[5])
 		philo->nb_times = ft_atoi(av[5]);
 	else
-		philo->nb_times = 0;
+		philo->nb_times = -1;
 }
 
 int check_arg(t_philo *philo)
