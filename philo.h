@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/05 14:08:07 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:11:34 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 typedef struct s_philo {
 	pthread_mutex_t *fork;
 	int	nb_philo;
-	useconds_t time_die;
-	useconds_t time_eat;
-	useconds_t time_sleep;
+	int time_die;
+	int time_eat;
+	int time_sleep;
 	int nb_times;
 	long long time_start;
 } t_philo;
@@ -48,6 +48,7 @@ int check_arg(t_philo *philo);
 int create_thread(t_philo *philo);
 
 long long current_time(void);
+void own_sleep(int time_to_sleep);
 
 
 #endif

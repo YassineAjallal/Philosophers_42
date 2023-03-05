@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/05 14:18:50 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/05 15:11:27 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void *print(void *p)
 		pthread_mutex_lock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
 		printf("%lld %d has taken a fork\n", current_time() - thread->philo->time_start ,thread->id + 1);
 		printf("%lld %d is eating\n", current_time() - thread->philo->time_start ,thread->id + 1);
-		usleep(thread->philo->time_eat * 1000);
+		own_sleep(thread->philo->time_eat);
 		thread->nb_eat++;
 		pthread_mutex_unlock(&thread->philo->fork[thread->id]);
 		pthread_mutex_unlock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
 		printf("%lld %d is sleeping\n", current_time() - thread->philo->time_start ,thread->id + 1);
-		usleep(thread->philo->time_sleep * 1000);
+		own_sleep(thread->philo->time_sleep);
 		printf("%lld %d is thinking\n", current_time() - thread->philo->time_start, thread->id + 1);
 	}
 	return (NULL);
