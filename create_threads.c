@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/05 12:55:48 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/05 14:11:53 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@ void *print(void *p)
 	t_details *thread = (t_details *)p;
 	while(1)
 	{
+		
 		if (thread->nb_eat == thread->philo->nb_times)
 		{
-			printf("---> Philo Id : %d {{     die    }}\n------------------------------------------\n", thread->id + 1);
+			// printf("---> Philo Id : %d {{     die    }}\n", thread->id + 1);
 			thread->status = 1;
 			break;
 		}
-		
 		pthread_mutex_lock(&thread->philo->fork[thread->id]);
 		pthread_mutex_lock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
-		printf("---> Philo Id : %d has taken fork\n------------------------------------------\n", thread->id + 1);
-		printf("---> Philo Id : %d is eating\n------------------------------------------\n", thread->id + 1);
-		usleep(600);
+		printf("%lld %d has taken a fork\n", current_time() - thread->philo->time_start ,thread->id + 1);
+		printf("%lld %d is eating\n", current_time() - thread->philo->time_start ,thread->id + 1);
+		usleep(thread->philo->time_eat);
 		thread->nb_eat++;
 		pthread_mutex_unlock(&thread->philo->fork[thread->id]);
 		pthread_mutex_unlock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
-		printf("---> Philo Id : %d is sleeping\n------------------------------------------\n", thread->id + 1);
-		usleep(600);
-		printf("---> Philo Id : %d is thinking\n------------------------------------------\n", thread->id + 1);
+		printf("%lld %d is sleeping\n", current_time() - thread->philo->time_start ,thread->id + 1);
+		usleep(thread->philo->time_sleep);
+		printf("%lld %d is thinking\n", current_time() - thread->philo->time_start, thread->id + 1);
 	}
 	return (NULL);
 }
