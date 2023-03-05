@@ -6,83 +6,85 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/02/24 18:51:10 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/05 12:55:48 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-// void *take_fork(t_philo *philo)
-// {
-// 		int i;
-// 		i = -1;		
-// 		i++;	
-// 		// pthread_mutex_unlock(&philo->fork[i]);
-// 		// pthread_mutex_unlock(&philo->fork[(i + 1) % 9]);
-// 		// philo->philos[i].status = 1;
-// 	return (NULL);
-// }
 void *print(void *p)
 {
-	t_details *philo = (t_details *)p;
+	t_details *thread = (t_details *)p;
 	while(1)
-	{	
-		pthread_mutex_lock(&philo->fork[philo->id]);
-		pthread_mutex_lock(&philo->fork[(philo->id + 1) % philo->nb_philo]);
-		printf("---> Philo Id : %d taken fork\n", philo->id + 1);
-		printf("---> Philo Id : %d Eating\n", philo->id + 1);
-		sleep(10);
-		pthread_mutex_unlock(&philo->fork[philo->id]);
-		pthread_mutex_unlock(&philo->fork[(philo->id + 1) % philo->nb_philo]);
-		printf("---> Philo Id : %d thinking\n", philo->id + 1);
+	{
+		if (thread->nb_eat == thread->philo->nb_times)
+		{
+			printf("---> Philo Id : %d {{     die    }}\n------------------------------------------\n", thread->id + 1);
+			thread->status = 1;
+			break;
+		}
+		
+		pthread_mutex_lock(&thread->philo->fork[thread->id]);
+		pthread_mutex_lock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
+		printf("---> Philo Id : %d has taken fork\n------------------------------------------\n", thread->id + 1);
+		printf("---> Philo Id : %d is eating\n------------------------------------------\n", thread->id + 1);
+		usleep(600);
+		thread->nb_eat++;
+		pthread_mutex_unlock(&thread->philo->fork[thread->id]);
+		pthread_mutex_unlock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
+		printf("---> Philo Id : %d is sleeping\n------------------------------------------\n", thread->id + 1);
+		usleep(600);
+		printf("---> Philo Id : %d is thinking\n------------------------------------------\n", thread->id + 1);
 	}
-	// if (pthread_mutex_trylock(&philo->fork[i]) == 0)
-	// else
-	// 	printf("fork number : %d is locked\n", i);
-
-	// i = 0;
-	// while(i < philo->nb_philo)
-	// {
-	// 	if (philo->philos[i].status == 1)
-	// 		printf("Philo Id : %d taken fork\n", philo->philos[i].id);
-	// 	i++;
-	// }
 	return (NULL);
 }
 int create_thread(t_philo *philo)
 {
+	t_details *threads;
 	int i;
-	
 	i = 0;
-	philo->philos = malloc(sizeof(t_details) * philo->nb_philo);
+	threads = malloc(sizeof(t_details) * philo->nb_philo);
 	philo->fork = malloc(sizeof(pthread_mutex_t) * philo->nb_philo);
-	if (!philo->philos)
+	if (!threads)
+		return (0);
+	if (!philo->fork)
 		return (0);
 	while (i < philo->nb_philo)
 	{
-		philo->philos[i].id = i;
-		philo->philos[i].status = 0;
-		philo->philos[i].fork = philo->fork;
-		philo->philos[i].nb_philo = philo->nb_philo;
+		threads[i].id = i;
+		threads[i].status = 0;
+		threads[i].nb_eat = 0;
+		threads[i].philo = philo;
+		
 		if (pthread_mutex_init(&philo->fork[i], NULL) != 0)
 			return (0);
 		i++;
 	}
-	i = 0;
-	// while(1)
-	// {	
+		i = 0;	
 		while (i < philo->nb_philo)
 		{	
-			if(pthread_create(&philo->philos[i].thread, NULL, print, &philo->philos[i]) != 0)
+			if(pthread_create(&threads[i].thread, NULL, print, &threads[i]) != 0)
 				return (0);
 			i++;
 		}
 		i = 0;
 		while (i < philo->nb_philo)
 		{	
-			if (pthread_join(philo->philos[i].thread, NULL) != 0)
+			if (pthread_join(threads[i].thread, NULL) != 0)
 				return (0);
 			i++;
 		}
-	// }
 	return (1);
 }
+
+
+// number_of_philosophers: the number of threads my program should be running.
+
+// time_to_die: the time where a thread shouldn't exceed in thinking (waiting for resources).
+
+// time_to_eat: The time where a thread is locking both mutexes (eating phase).
+
+// time_to_sleep: The time where a thread will go to sleep after eating (sleeping).
+
+// number_of_times_each_philosopher_must_eat: The limit of times a philosopher can eat.
+
+// You have to display a small log where each philosopher is doing an action in the following format: (timestamp) (PHILO_ID) (doing an action)

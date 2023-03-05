@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/02/24 18:39:18 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/05 13:27:38 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@
 #include <unistd.h>
 #include <sys/time.h>
 
-typedef struct s_details {
-	pthread_t thread;
-	int id;
-	int status;
-	pthread_mutex_t *fork;
-	int	nb_philo;
-} t_details;
-
 typedef struct s_philo {
-	t_details *philos;
 	pthread_mutex_t *fork;
 	int	nb_philo;
 	int time_die;
 	int time_eat;
 	int time_sleep;
 	int nb_times;
+	long long last_time;
 } t_philo;
+typedef struct s_details {
+	pthread_t thread;
+	int id;
+	int status;
+	int nb_eat;
+	t_philo *philo;
+} t_details;
+
 
 
 int	ft_atoi(char *str);

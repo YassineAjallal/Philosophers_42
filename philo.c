@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/02/24 17:30:12 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/04 19:16:53 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(int ac, char **av)
 	philo = malloc(sizeof(t_philo));
 	if (!philo)
 		return (0);
-	if (ac != 6)
+	if (ac != 6 && ac != 5)
 	{
 		printf("Error\nBad usage\n");
 		return (0);
@@ -52,7 +52,6 @@ int main(int ac, char **av)
 		printf("-----------------------------------------------------\n\n");
 		return (0);
 	}
-	printf("success\n");
 	create_thread(philo);
 	return (0);
 }
