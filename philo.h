@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/05 15:11:34 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:46:28 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_details {
 	int id;
 	int status;
 	int nb_eat;
+	long long last_eat_time;
 	t_philo *philo;
 } t_details;
 

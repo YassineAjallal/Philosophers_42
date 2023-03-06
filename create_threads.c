@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/05 15:48:11 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:26:55 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@ void *print(void *p)
 	t_details *thread = (t_details *)p;
 	while(1)
 	{
-		
+		if (current_time() - thread->last_eat_time > thread->philo->time_die)
+		{
+			printf("%lld %d is died\n", current_time() - thread->philo->time_start ,thread->id + 1);
+			break;
+		}
 		pthread_mutex_lock(&thread->philo->fork[thread->id]);
 		pthread_mutex_lock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
 		printf("%lld %d has taken a fork\n", current_time() - thread->philo->time_start ,thread->id + 1);
 		printf("%lld %d is eating\n", current_time() - thread->philo->time_start ,thread->id + 1);
 		own_sleep(thread->philo->time_eat);
 		thread->nb_eat++;
+		thread->last_eat_time = current_time();
 		pthread_mutex_unlock(&thread->philo->fork[thread->id]);
 		pthread_mutex_unlock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
 		printf("%lld %d is sleeping\n", current_time() - thread->philo->time_start ,thread->id + 1);
@@ -30,8 +35,8 @@ void *print(void *p)
 		printf("%lld %d is thinking\n", current_time() - thread->philo->time_start, thread->id + 1);
 		if (thread->nb_eat >= thread->philo->nb_times)
 		{
-			// printf("---> Philo Id : %d {{     die    }}\n", thread->id + 1);
 			thread->status = 1;
+			printf("%lld %d is died\n", current_time() - thread->philo->time_start ,thread->id + 1);
 			break;
 		}
 	}
@@ -52,6 +57,7 @@ int create_thread(t_philo *philo)
 	{
 		threads[i].id = i;
 		threads[i].status = 0;
+		threads[i].last_eat_time = current_time();
 		threads[i].nb_eat = 0;
 		threads[i].philo = philo;
 		
