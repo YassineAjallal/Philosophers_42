@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/06 15:46:28 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:58:14 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_philo {
 	int time_eat;
 	int time_sleep;
 	int nb_times;
+	int philo_died;
 	long long time_start;
 } t_philo;
 typedef struct s_details {
