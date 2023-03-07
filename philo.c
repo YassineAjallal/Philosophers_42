@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/05 15:31:30 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:08:10 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int main(int ac, char **av)
 		return (0);
 	}
 	init_philo(philo, av);
-	printf("%lld\n", philo->time_start);
 	if (!check_arg(philo))
 	{
 		printf("\n-----------------------Error------------------------\n\n\n");

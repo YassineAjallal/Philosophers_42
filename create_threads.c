@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/06 20:01:06 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:00:35 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@ void *print(void *p)
 	t_details *thread = (t_details *)p;
 	while(1)
 	{
-		if (current_time() - thread->last_eat_time > thread->philo->time_die)
+		if (*(thread->is_died) == 1)
+			break;
+		if (current_time() - thread->last_eat_time > thread->philo->time_die || thread->philo->nb_philo == 1)
 		{
 			printf("%lld %d is died\n", current_time() - thread->philo->time_start ,thread->id + 1);
-			thread->philo->philo_died = 1;
+			*(thread->is_died) = 1;
 			break;
 		}
+		if (*(thread->is_died) == 1)
+			break;
 		pthread_mutex_lock(&thread->philo->fork[thread->id]);
 		pthread_mutex_lock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
 		printf("%lld %d has taken a fork\n", current_time() - thread->philo->time_start ,thread->id + 1);
@@ -36,7 +40,7 @@ void *print(void *p)
 		printf("%lld %d is thinking\n", current_time() - thread->philo->time_start, thread->id + 1);
 		if (thread->nb_eat == thread->philo->nb_times)
 		{
-			thread->philo->philo_died = 1;
+			*(thread->is_died) = 1;
 			printf("%lld %d is died\n", current_time() - thread->philo->time_start ,thread->id + 1);
 			break;
 		}
@@ -46,10 +50,13 @@ void *print(void *p)
 int create_thread(t_philo *philo)
 {
 	t_details *threads;
+	int *is_died;
 	int i;
 	i = 0;
 	threads = malloc(sizeof(t_details) * philo->nb_philo);
 	philo->fork = malloc(sizeof(pthread_mutex_t) * philo->nb_philo);
+	is_died = malloc(sizeof(int));
+	*is_died = 0;
 	if (!threads)
 		return (0);
 	if (!philo->fork)
@@ -61,6 +68,7 @@ int create_thread(t_philo *philo)
 		threads[i].last_eat_time = current_time();
 		threads[i].nb_eat = 0;
 		threads[i].philo = philo;
+		threads[i].is_died = is_died;
 		
 		if (pthread_mutex_init(&philo->fork[i], NULL) != 0)
 			return (0);
