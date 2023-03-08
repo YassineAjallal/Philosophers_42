@@ -6,42 +6,40 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/07 15:00:35 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:07:42 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-void *print(void *p)
+void *func_thread(void *p)
 {
 	t_details *thread = (t_details *)p;
 	while(1)
 	{
 		if (*(thread->is_died) == 1)
 			break;
-		if (current_time() - thread->last_eat_time > thread->philo->time_die || thread->philo->nb_philo == 1)
-		{
-			printf("%lld %d is died\n", current_time() - thread->philo->time_start ,thread->id + 1);
-			*(thread->is_died) = 1;
+		// if (current_time() - thread->last_eat_time > thread->philo->time_die || thread->philo->nb_philo == 1)
+		// {
+		// 	printf("%lld %d is died\n", current_time() - thread->philo->time_start ,thread->id + 1);
+		// 	*(thread->is_died) = 1;
+		// 	break;
+		// }
+		if(!mutex_lock(thread))
 			break;
-		}
 		if (*(thread->is_died) == 1)
 			break;
-		pthread_mutex_lock(&thread->philo->fork[thread->id]);
-		pthread_mutex_lock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
-		printf("%lld %d has taken a fork\n", current_time() - thread->philo->time_start ,thread->id + 1);
-		printf("%lld %d is eating\n", current_time() - thread->philo->time_start ,thread->id + 1);
-		own_sleep(thread->philo->time_eat);
-		thread->nb_eat++;
-		thread->last_eat_time = current_time();
-		pthread_mutex_unlock(&thread->philo->fork[thread->id]);
-		pthread_mutex_unlock(&thread->philo->fork[(thread->id + 1) % thread->philo->nb_philo]);
 		printf("%lld %d is sleeping\n", current_time() - thread->philo->time_start ,thread->id + 1);
+		if (*(thread->is_died) == 1)
+			break;
 		own_sleep(thread->philo->time_sleep);
+		if (*(thread->is_died) == 1)
+			break;
 		printf("%lld %d is thinking\n", current_time() - thread->philo->time_start, thread->id + 1);
+		if (*(thread->is_died) == 1)
+			break;
 		if (thread->nb_eat == thread->philo->nb_times)
 		{
 			*(thread->is_died) = 1;
-			printf("%lld %d is died\n", current_time() - thread->philo->time_start ,thread->id + 1);
 			break;
 		}
 	}
@@ -77,7 +75,7 @@ int create_thread(t_philo *philo)
 		i = 0;	
 		while (i < philo->nb_philo)
 		{	
-			if(pthread_create(&threads[i].thread, NULL, print, &threads[i]) != 0)
+			if(pthread_create(&threads[i].thread, NULL, func_thread, &threads[i]) != 0)
 				return (0);
 			i++;
 		}
