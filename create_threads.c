@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 16:14:49 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:01:58 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void *func_thread(void *p)
 	t_details *thread = (t_details *)p;
 	while(1)
 	{
-		printf("%lld %d is thinking\n", get_time() - thread->philo->time_start, thread->id + 1);
 		if(!mutex_lock(thread))
 			break;
-		printf("%lld %d is sleeping\n", get_time() - thread->philo->time_start ,thread->id + 1);
-		own_sleep(thread->philo->time_sleep);
 		if (thread->nb_eat == thread->philo->nb_times)
 		{
 			*(thread->is_died) = 1;
 			break;
 		}
+		printf("%lld %d is sleeping\n", get_time() - thread->philo->time_start ,thread->id + 1);
+		own_sleep(thread->philo->time_sleep);
+		printf("%lld %d is thinking\n", get_time() - thread->philo->time_start, thread->id + 1);
 	}
 	return (NULL);
 }
