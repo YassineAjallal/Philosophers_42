@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 18:23:39 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:42:59 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void own_sleep(int time_to_sleep);
 int mutex_lock(t_details *thread);
 
 int ft_check_nb_eat(t_details *threads, int nb_philo);
+int	init_threads(t_philo *philo, t_details *threads);
+int stop_threads(t_philo *philo, t_details *threads);
 
 
 #endif
