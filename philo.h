@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 16:16:04 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:40:33 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ typedef struct s_philo {
 typedef struct s_details {
 	pthread_t thread;
 	int id;
-	int status;
 	int nb_eat;
-	int *is_died;
+	int is_died;
+	int is_finish;
 	long long last_eat_time;
 	t_philo *philo;
 } t_details;

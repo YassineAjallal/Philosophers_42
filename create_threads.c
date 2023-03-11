@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 17:01:58 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 17:43:37 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void *func_thread(void *p)
 			break;
 		if (thread->nb_eat == thread->philo->nb_times)
 		{
-			*(thread->is_died) = 1;
+			thread->is_finish = 1;
 			break;
 		}
 		printf("%lld %d is sleeping\n", get_time() - thread->philo->time_start ,thread->id + 1);
@@ -33,13 +33,11 @@ void *func_thread(void *p)
 int create_thread(t_philo *philo)
 {
 	t_details *threads;
-	int *is_died;
+	// int *is_died;
 	int i;
 	i = 0;
 	threads = malloc(sizeof(t_details) * philo->nb_philo);
 	philo->fork = malloc(sizeof(pthread_mutex_t) * philo->nb_philo);
-	is_died = malloc(sizeof(int));
-	*is_died = 0;
 	if (!threads)
 		return (0);
 	if (!philo->fork)
@@ -47,11 +45,11 @@ int create_thread(t_philo *philo)
 	while (i < philo->nb_philo)
 	{
 		threads[i].id = i;
-		threads[i].status = 0;
 		threads[i].last_eat_time = get_time();
 		threads[i].nb_eat = 0;
 		threads[i].philo = philo;
-		threads[i].is_died = is_died;
+		threads[i].is_died = 0;
+		threads[i].is_finish = 0;
 		
 		if (pthread_mutex_init(&philo->fork[i], NULL) != 0)
 			return (0);
@@ -64,10 +62,19 @@ int create_thread(t_philo *philo)
 				return (0);
 			i++;
 		}
-		while (1)
+		i = 0;
+		while (i < philo->nb_philo)
 		{
-			if (*(is_died) == 1)
-				return (0);
+			if (threads[i].is_died == 1)
+			{
+				printf("%lld %d is died\n", get_time() - threads[i].philo->time_start ,threads[i].id + 1);
+				return (0);	
+			}
+			// else if (threads[i].is_finish == 1)
+			// 	return (0);
+			i++;
+			if (i == philo->nb_philo)
+				i = 0;
 		}
 		i = 0;
 		while (i < philo->nb_philo)
