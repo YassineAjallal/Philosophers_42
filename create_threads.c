@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 15:37:02 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:14:49 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,11 @@ void *func_thread(void *p)
 	t_details *thread = (t_details *)p;
 	while(1)
 	{
-		if (*(thread->is_died) == 1)
-			break;
 		printf("%lld %d is thinking\n", get_time() - thread->philo->time_start, thread->id + 1);
 		if(!mutex_lock(thread))
 			break;
-		if (*(thread->is_died) == 1)
-			break;
 		printf("%lld %d is sleeping\n", get_time() - thread->philo->time_start ,thread->id + 1);
-		if (*(thread->is_died) == 1)
-			break;
 		own_sleep(thread->philo->time_sleep);
-		if (*(thread->is_died) == 1)
-			break;
-		if (*(thread->is_died) == 1)
-			break;
 		if (thread->nb_eat == thread->philo->nb_times)
 		{
 			*(thread->is_died) = 1;
@@ -73,6 +63,11 @@ int create_thread(t_philo *philo)
 			if(pthread_create(&threads[i].thread, NULL, func_thread, &threads[i]) != 0)
 				return (0);
 			i++;
+		}
+		while (1)
+		{
+			if (*(is_died) == 1)
+				return (0);
 		}
 		i = 0;
 		while (i < philo->nb_philo)

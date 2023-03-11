@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:42:07 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 15:38:18 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:16:56 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int mutex_lock(t_details *thread)
 	{
 		if (*(thread->is_died) != 1)
 		{
-			*(thread->is_died) = 1;
+			pthread_mutex_lock(&thread->philo->print_die);
 			printf("%lld %d is died\n", get_time() - thread->philo->time_start ,thread->id + 1);
+			*(thread->is_died) = 1;
+			pthread_mutex_unlock(&thread->philo->print_die);
 			pthread_mutex_unlock(&thread->philo->fork[thread->id]);
 		}
 		return (0);
