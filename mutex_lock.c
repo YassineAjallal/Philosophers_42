@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:42:07 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 18:55:35 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:08:37 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	one_philo(t_details *thread)
 		pthread_mutex_unlock(&thread->philo->fork[thread->id]);
 		return (0);
 	}
+	return (1);
 }
 
 int	mutex_lock(t_details *thread)
