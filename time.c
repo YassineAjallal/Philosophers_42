@@ -6,13 +6,13 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:58:20 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/05 15:13:45 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:15:50 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long current_time(void)
+long long get_time(void)
 {
 	struct timeval time;
 	gettimeofday(&time, NULL);
@@ -22,10 +22,10 @@ long long current_time(void)
 void own_sleep(int time_to_sleep)
 {
 	long long curr;
-	curr = current_time();
+	curr = get_time();
 	while(1)
 	{
-		if (current_time() - curr == time_to_sleep)
+		if (get_time() - curr == time_to_sleep)
 			break;
 	}
 }

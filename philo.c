@@ -6,14 +6,14 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/07 12:08:10 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:03:21 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 void init_philo(t_philo *philo, char **av)
 {
-	philo->time_start = current_time();
+	philo->time_start = get_time();
 	philo->nb_philo = ft_atoi(av[1]);
 	philo->time_die = ft_atoi(av[2]);
 	philo->time_eat = ft_atoi(av[3]);
@@ -29,8 +29,8 @@ int check_arg(t_philo *philo)
 	
 	if (philo->nb_philo > 200 || philo->nb_philo < 0)
 		return (0);
-	// if (philo->time_die < 60 || philo->time_eat < 60 || philo->time_sleep < 60)
-	// 	return (0);
+	if (philo->time_die == 60 || philo->time_eat == 60 || philo->time_sleep == 60)
+		return (0);
 	return (1);
 }
 
@@ -48,13 +48,7 @@ int main(int ac, char **av)
 	}
 	init_philo(philo, av);
 	if (!check_arg(philo))
-	{
-		printf("\n-----------------------Error------------------------\n\n\n");
-		printf("---> Number of philosophers is \"More\" than 200\n\n");
-		printf("---> Number of philosophers is \"Less\" than 0\n\n\n");
-		printf("-----------------------------------------------------\n\n");
 		return (0);
-	}
 	create_thread(philo);
 	return (0);
 }

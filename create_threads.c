@@ -6,11 +6,12 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/08 12:07:42 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:37:02 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 void *func_thread(void *p)
 {
 	t_details *thread = (t_details *)p;
@@ -18,23 +19,17 @@ void *func_thread(void *p)
 	{
 		if (*(thread->is_died) == 1)
 			break;
-		// if (current_time() - thread->last_eat_time > thread->philo->time_die || thread->philo->nb_philo == 1)
-		// {
-		// 	printf("%lld %d is died\n", current_time() - thread->philo->time_start ,thread->id + 1);
-		// 	*(thread->is_died) = 1;
-		// 	break;
-		// }
+		printf("%lld %d is thinking\n", get_time() - thread->philo->time_start, thread->id + 1);
 		if(!mutex_lock(thread))
 			break;
 		if (*(thread->is_died) == 1)
 			break;
-		printf("%lld %d is sleeping\n", current_time() - thread->philo->time_start ,thread->id + 1);
+		printf("%lld %d is sleeping\n", get_time() - thread->philo->time_start ,thread->id + 1);
 		if (*(thread->is_died) == 1)
 			break;
 		own_sleep(thread->philo->time_sleep);
 		if (*(thread->is_died) == 1)
 			break;
-		printf("%lld %d is thinking\n", current_time() - thread->philo->time_start, thread->id + 1);
 		if (*(thread->is_died) == 1)
 			break;
 		if (thread->nb_eat == thread->philo->nb_times)
@@ -63,7 +58,7 @@ int create_thread(t_philo *philo)
 	{
 		threads[i].id = i;
 		threads[i].status = 0;
-		threads[i].last_eat_time = current_time();
+		threads[i].last_eat_time = get_time();
 		threads[i].nb_eat = 0;
 		threads[i].philo = philo;
 		threads[i].is_died = is_died;
