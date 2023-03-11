@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 18:42:10 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:58:41 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	init_threads(t_philo *philo, t_details *threads)
 {
 	int	i;
-	i = 0;
 
+	i = 0;
 	while (i < philo->nb_philo)
 	{
 		threads[i].id = i;
@@ -29,21 +29,21 @@ int	init_threads(t_philo *philo, t_details *threads)
 			return (0);
 		i++;
 	}
-	i = 0;	
 	return (1);
 }
 
-int stop_threads(t_philo *philo, t_details *threads)
+int	stop_threads(t_philo *philo, t_details *threads)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < philo->nb_philo)
 	{
 		if (threads[i].is_died == 1)
 		{
-			printf("%lld %d is died\n", get_time() - threads[i].philo->time_start ,threads[i].id + 1);
-			return (0);	
+			printf("%lld %d is died\n",
+				get_time() - threads[i].philo->time_start, threads[i].id + 1);
+			return (0);
 		}
 		else if (ft_check_nb_eat(threads, philo->nb_philo))
 			return (0);

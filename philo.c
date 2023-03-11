@@ -6,12 +6,13 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 15:03:21 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:57:02 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-void init_philo(t_philo *philo, char **av)
+
+void	init_philo(t_philo *philo, char **av)
 {
 	philo->time_start = get_time();
 	philo->nb_philo = ft_atoi(av[1]);
@@ -24,19 +25,19 @@ void init_philo(t_philo *philo, char **av)
 		philo->nb_times = 0;
 }
 
-int check_arg(t_philo *philo)
+int	check_arg(t_philo *philo)
 {
-	
 	if (philo->nb_philo > 200 || philo->nb_philo < 0)
 		return (0);
-	if (philo->time_die == 60 || philo->time_eat == 60 || philo->time_sleep == 60)
+	if (philo->time_die == 60 || philo->time_eat == 60
+		|| philo->time_sleep == 60)
 		return (0);
 	return (1);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = malloc(sizeof(t_philo));
 	if (!philo)

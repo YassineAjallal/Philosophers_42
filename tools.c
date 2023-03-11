@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:18:47 by yajallal          #+#    #+#             */
-/*   Updated: 2023/02/20 18:40:15 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:00:45 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_isdigit(int c)
 
 int	ft_atoi(char *str)
 {
-	int		i;
-	int		signe;
+	int	i;
+	int	signe;
 	int	res;
 
 	i = 0;
