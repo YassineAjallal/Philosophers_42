@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 17:43:37 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:23:55 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int create_thread(t_philo *philo)
 				printf("%lld %d is died\n", get_time() - threads[i].philo->time_start ,threads[i].id + 1);
 				return (0);	
 			}
-			// else if (threads[i].is_finish == 1)
-			// 	return (0);
+			else if (ft_check_nb_eat(threads, philo->nb_philo))
+				return (0);
 			i++;
 			if (i == philo->nb_philo)
 				i = 0;
