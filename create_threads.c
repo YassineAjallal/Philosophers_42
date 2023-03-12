@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 18:49:56 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/12 14:18:26 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	*simulation_fct(void *p)
 		own_sleep(thread->philo->time_sleep);
 		printf("%lld %d is thinking\n",
 			get_time() - thread->philo->time_start, thread->id + 1);
+		own_sleep(10);
 	}
 	return (NULL);
 }
@@ -48,7 +49,7 @@ int	create_thread(t_philo *philo)
 	if (!init_threads(philo, threads))
 		return (0);
 	while (++i < philo->nb_philo)
-	{	
+	{
 		if (pthread_create(&threads[i].thread, NULL,
 				simulation_fct, &threads[i]) != 0)
 			return (0);
