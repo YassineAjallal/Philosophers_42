@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/12 12:34:48 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/13 17:40:39 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,19 @@
 # include <unistd.h>
 # include <sys/time.h>
 
+typedef struct s_mutex_list {
+	pthread_mutex_t m_nb_philo;
+	pthread_mutex_t m_time_die;
+	pthread_mutex_t m_time_eat;
+	pthread_mutex_t m_time_sleep;
+	pthread_mutex_t	m_nb_times;
+	pthread_mutex_t m_time_start;
+}	t_mutex_list;
+
 typedef struct s_philo {
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	print_die;
+	t_mutex_list	*mutex_list;
+	pthread_mutex_t m_philo;
 	int				nb_philo;
 	int				time_die;
 	int				time_eat;
@@ -42,7 +52,7 @@ typedef struct s_details {
 }	t_details;
 
 // check_nb_eat.c
-int			ft_check_nb_eat(t_details *threads, int nb_philo);
+int			ft_check_nb_eat(t_details *threads, t_philo *philo);
 
 // create_threads.c
 void		*simulation_fct(void *p);
@@ -57,6 +67,7 @@ void		init_philo(t_philo *philo, char **av);
 int			check_arg(t_philo *philo);
 
 // threads_fct.c
+int			init_mutex(t_mutex_list *mutex_list);
 int			init_threads(t_philo *philo, t_details *threads);
 int			stop_threads(t_philo *philo, t_details *threads);
 
