@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 15:56:57 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:39:51 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,8 @@ void	*simulation_fct(void *p)
 		usleep(1500);
 	while (1)
 	{
-		pthread_mutex_lock(&thread->philo->m_is_dead);
-		if (thread->philo->is_died == 1)
-		{
-			pthread_mutex_unlock(&thread->philo->m_is_dead);
+		if (!philo_death(thread))
 			break ;
-		}
-		pthread_mutex_unlock(&thread->philo->m_is_dead);
 		if (!mutex_lock(thread))
 			break ;
 		if (thread->nb_eat == thread->philo->nb_times)
@@ -39,9 +34,7 @@ void	*simulation_fct(void *p)
 		}
 		printf("%lld %d is sleeping\n",
 			get_time() - thread->philo->time_start, thread->id + 1);
-		
 		own_sleep(thread->philo->time_sleep);
-
 		printf("%lld %d is thinking\n",
 			get_time() - thread->philo->time_start, thread->id + 1);
 	}
@@ -63,17 +56,13 @@ int	create_thread(t_philo *philo)
 	if (!init_mutex(philo))
 		return (0);
 	while (++i < philo->nb_philo)
-	{
 		if (pthread_create(&threads[i].thread, NULL,
 				simulation_fct, &threads[i]) != 0)
 			return (0);
-	}
 	stop_threads(threads);
 	i = -1;
 	while (++i < philo->nb_philo)
-	{	
 		if (pthread_join(threads[i].thread, NULL) != 0)
 			return (0);
-	}
 	return (1);
 }

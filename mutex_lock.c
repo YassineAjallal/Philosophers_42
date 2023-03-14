@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:42:07 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 15:53:32 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:42:21 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,15 @@
 
 int	one_philo(t_details *thread)
 {
-	int nb_philo;
-
-
-	nb_philo = thread->philo->nb_philo;
-	
-	if (nb_philo == 1)
+	if (thread->philo->nb_philo == 1)
 	{
 		pthread_mutex_lock(&thread->philo->fork[thread->id]);
-	
 		printf("%lld %d has taken a fork\n",
 			get_time() - thread->philo->time_start, thread->id + 1);
-		own_sleep(thread->philo->time_die);	
+		own_sleep(thread->philo->time_die);
 		pthread_mutex_lock(&thread->philo->m_is_dead);
 		printf("%lld %d died\n",
-				get_time() - thread->philo->time_start, thread->id + 1);
+			get_time() - thread->philo->time_start, thread->id + 1);
 		thread->philo->is_died = 1;
 		pthread_mutex_unlock(&thread->philo->m_is_dead);
 		pthread_mutex_unlock(&thread->philo->fork[thread->id]);

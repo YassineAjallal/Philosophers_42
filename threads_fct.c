@@ -6,13 +6,13 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 15:54:48 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:46:17 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int init_mutex(t_philo *philo)
+int	init_mutex(t_philo *philo)
 {
 	if (pthread_mutex_init(&philo->m_is_dead, NULL) != 0)
 		return (0);
@@ -22,13 +22,13 @@ int init_mutex(t_philo *philo)
 		return (0);
 	return (1);
 }
+
 int	init_threads(t_philo *philo, t_details *threads)
 {
 	int	i;
-	int nb_philo;
-	nb_philo = philo->nb_philo;
+
 	i = 0;
-	while (i < nb_philo)
+	while (i < philo->nb_philo)
 	{
 		threads[i].id = i;
 		threads[i].last_eat_time = get_time();
@@ -46,12 +46,9 @@ int	init_threads(t_philo *philo, t_details *threads)
 int	stop_threads(t_details *threads)
 {
 	int	i;
-	int nb_philo;
-
-	nb_philo = threads->philo->nb_philo;
 
 	i = 0;
-	while (i < nb_philo)
+	while (i < threads[0].philo->nb_philo)
 	{
 		pthread_mutex_lock(&threads[i].philo->m_last_eat_time);
 		if (get_time() - threads[i].last_eat_time >= threads[i].philo->time_die)
@@ -62,13 +59,13 @@ int	stop_threads(t_details *threads)
 			threads[i].philo->is_died = 1;
 			pthread_mutex_unlock(&threads[i].philo->m_is_dead);
 			pthread_mutex_unlock(&threads[i].philo->m_last_eat_time);
-			return(0);
+			return (0);
 		}
 		else if (ft_check_nb_eat(threads))
 			return (0);
 		pthread_mutex_unlock(&threads[i].philo->m_last_eat_time);
 		i++;
-		if (i == nb_philo)
+		if (i == threads[0].philo->nb_philo)
 			i = 0;
 	}
 	return (1);

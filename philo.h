@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 15:38:05 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:49:35 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,15 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-
 typedef struct s_philo {
 	pthread_mutex_t	*fork;
-	pthread_mutex_t m_is_dead;
-	pthread_mutex_t m_is_finish;
-	pthread_mutex_t m_last_eat_time;
+	pthread_mutex_t	m_is_dead;
+	pthread_mutex_t	m_is_finish;
+	pthread_mutex_t	m_last_eat_time;
 	int				nb_philo;
 	int				time_die;
 	int				time_eat;
-	int 			is_died;
+	int				is_died;
 	int				time_sleep;
 	int				all_finish;
 	int				nb_times;
@@ -56,6 +55,9 @@ int			create_thread(t_philo *philo);
 int			one_philo(t_details *thread);
 int			mutex_lock(t_details *thread);
 
+// philo_death.c
+int			philo_death(t_details *thread);
+
 // philo.c
 void		init_philo(t_philo *philo, char **av);
 int			check_arg(t_philo *philo);
@@ -72,9 +74,5 @@ void		own_sleep(int time_to_sleep);
 // tools.c
 int			ft_atoi(char *str);
 int			ft_isdigit(int c);
+
 #endif
-
-
-// is_died
-// last_eat_time
-// is_finish
