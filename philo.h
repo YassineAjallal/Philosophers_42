@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/13 17:40:39 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:38:05 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,18 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef struct s_mutex_list {
-	pthread_mutex_t m_nb_philo;
-	pthread_mutex_t m_time_die;
-	pthread_mutex_t m_time_eat;
-	pthread_mutex_t m_time_sleep;
-	pthread_mutex_t	m_nb_times;
-	pthread_mutex_t m_time_start;
-}	t_mutex_list;
 
 typedef struct s_philo {
 	pthread_mutex_t	*fork;
-	t_mutex_list	*mutex_list;
-	pthread_mutex_t m_philo;
+	pthread_mutex_t m_is_dead;
+	pthread_mutex_t m_is_finish;
+	pthread_mutex_t m_last_eat_time;
 	int				nb_philo;
 	int				time_die;
 	int				time_eat;
+	int 			is_died;
 	int				time_sleep;
+	int				all_finish;
 	int				nb_times;
 	long long		time_start;
 }	t_philo;
@@ -45,14 +40,13 @@ typedef struct s_details {
 	pthread_t	thread;
 	int			id;
 	int			nb_eat;
-	int			is_died;
 	int			is_finish;
 	long long	last_eat_time;
 	t_philo		*philo;
 }	t_details;
 
 // check_nb_eat.c
-int			ft_check_nb_eat(t_details *threads, t_philo *philo);
+int			ft_check_nb_eat(t_details *threads);
 
 // create_threads.c
 void		*simulation_fct(void *p);
@@ -67,9 +61,9 @@ void		init_philo(t_philo *philo, char **av);
 int			check_arg(t_philo *philo);
 
 // threads_fct.c
-int			init_mutex(t_mutex_list *mutex_list);
+int			init_mutex(t_philo *philo);
 int			init_threads(t_philo *philo, t_details *threads);
-int			stop_threads(t_philo *philo, t_details *threads);
+int			stop_threads(t_details *threads);
 
 // time.c
 long long	get_time(void);
@@ -79,3 +73,8 @@ void		own_sleep(int time_to_sleep);
 int			ft_atoi(char *str);
 int			ft_isdigit(int c);
 #endif
+
+
+// is_died
+// last_eat_time
+// is_finish
