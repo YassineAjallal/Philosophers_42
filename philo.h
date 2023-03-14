@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 16:49:35 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:59:21 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int			one_philo(t_details *thread);
 int			mutex_lock(t_details *thread);
 
 // philo_death.c
-int			philo_death(t_details *thread);
+int			death_checker(t_details *thread);
+int			eat_checker(t_details *thread);
 
 // philo.c
 void		init_philo(t_philo *philo, char **av);

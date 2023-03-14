@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 16:39:51 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/14 17:02:38 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,12 @@ void	*simulation_fct(void *p)
 		usleep(1500);
 	while (1)
 	{
-		if (!philo_death(thread))
+		if (!death_checker(thread))
 			break ;
 		if (!mutex_lock(thread))
 			break ;
-		if (thread->nb_eat == thread->philo->nb_times)
-		{
-			pthread_mutex_lock(&thread->philo->m_is_finish);
-			thread->is_finish = 1;
-			pthread_mutex_unlock(&thread->philo->m_is_finish);
+		if (!eat_checker(thread))
 			break ;
-		}
 		printf("%lld %d is sleeping\n",
 			get_time() - thread->philo->time_start, thread->id + 1);
 		own_sleep(thread->philo->time_sleep);
