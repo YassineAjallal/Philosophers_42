@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/15 12:40:41 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:59:31 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ int			check_arg(char **av);
 int			init_philo(t_philo *philo, char **av);
 int			check_philo(t_philo *philo, char **av);
 
-// check_nb_eat.c
-int			ft_check_nb_eat(t_details *threads);
-
 // create_threads.c
 void		*simulation_fct(void *p);
 int			create_thread(t_philo *philo);
@@ -60,9 +57,10 @@ int			create_thread(t_philo *philo);
 int			one_philo(t_details *thread);
 int			mutex_lock(t_details *thread);
 
-// philo_death.c
+// philo_checker.c
 int			death_checker(t_details *thread);
 int			eat_checker(t_details *thread);
+int			check_nb_eat(t_details *threads);
 
 // threads_fct.c
 int			init_mutex(t_philo *philo);
@@ -70,7 +68,7 @@ int			init_threads(t_philo *philo, t_details *threads);
 int			stop_threads(t_details *threads);
 
 // print_log
-void print_log(t_details *thread, char *log);
+int 		print_log(t_details *thread, char *log);
 
 // time.c
 long long	get_time(void);

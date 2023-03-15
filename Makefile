@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread
 NAME = philo
-SRC = philo.c tools.c create_threads.c time.c mutex_lock.c check_nb_eat.c threads_fct.c philo_checker.c check_arg.c print_log.c
+SRC = philo.c tools.c create_threads.c time.c mutex_lock.c threads_fct.c philo_checker.c check_arg.c print_log.c
 
 OBJ = $(SRC:.c=.o)
 

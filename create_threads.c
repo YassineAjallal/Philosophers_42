@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/15 12:46:06 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/15 13:00:13 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ void	*simulation_fct(void *p)
 			break ;
 		if (!eat_checker(thread))
 			break ;
-		print_log(thread, "is sleeping");
+		if(!print_log(thread, "is sleeping"))
+			break ;
 		own_sleep(thread->philo->time_sleep);
-		print_log(thread, "is thinking");
+		if (!print_log(thread, "is thinking"))
+			break;
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:29:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 17:03:02 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:53:45 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,27 @@ int	eat_checker(t_details *thread)
 		thread->is_finish = 1;
 		pthread_mutex_unlock(&thread->philo->m_is_finish);
 		return (0);
+	}
+	return (1);
+}
+
+int	check_nb_eat(t_details *threads)
+{
+	int	i;
+	int	nb_philo;
+
+	nb_philo = threads->philo->nb_philo;
+	i = 0;
+	while (i < nb_philo)
+	{
+		pthread_mutex_lock(&threads[i].philo->m_is_finish);
+		if (threads[i].is_finish != 1)
+		{
+			pthread_mutex_unlock(&threads[i].philo->m_is_finish);
+			return (0);
+		}
+		pthread_mutex_unlock(&threads[i].philo->m_is_finish);
+		i++;
 	}
 	return (1);
 }
