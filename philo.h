@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/15 12:59:31 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/15 18:19:58 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_philo {
 	pthread_mutex_t	m_is_dead;
 	pthread_mutex_t	m_is_finish;
 	pthread_mutex_t	m_last_eat_time;
+	pthread_mutex_t	m_nb_eat;
+	pthread_mutex_t m_print;
 	int				nb_philo;
 	int				time_die;
 	int				time_eat;
@@ -68,7 +70,7 @@ int			init_threads(t_philo *philo, t_details *threads);
 int			stop_threads(t_details *threads);
 
 // print_log
-int 		print_log(t_details *thread, char *log);
+void		print_log(t_details *thread, char *log);
 
 // time.c
 long long	get_time(void);
