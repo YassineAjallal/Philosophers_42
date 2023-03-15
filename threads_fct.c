@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 17:02:46 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:45:05 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int	stop_threads(t_details *threads)
 		pthread_mutex_lock(&threads[i].philo->m_last_eat_time);
 		if (get_time() - threads[i].last_eat_time >= threads[i].philo->time_die)
 		{
-			printf("%lld %d died\n",
-				get_time() - threads[i].philo->time_start, threads[i].id + 1);
+			print_log(&threads[i], "died");
 			pthread_mutex_lock(&threads[i].philo->m_is_dead);
 			threads[i].philo->is_died = 1;
 			pthread_mutex_unlock(&threads[i].philo->m_is_dead);

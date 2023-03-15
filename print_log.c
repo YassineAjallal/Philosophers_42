@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   print_log.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/15 12:27:36 by yajallal         ###   ########.fr       */
+/*   Created: 2023/03/15 12:36:32 by yajallal          #+#    #+#             */
+/*   Updated: 2023/03/15 12:46:48 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+void print_log(t_details *thread, char *log)
 {
-	t_philo	*philo;
-
-	philo = malloc(sizeof(t_philo));
-	if (!philo)
-		return (0);
-	if (ac != 6 && ac != 5)
+	pthread_mutex_lock(&thread->philo->m_is_dead);
+	if (thread->philo->is_died != 1)
 	{
-		printf("Error\nBad usage\n");
-		return (0);
+		printf("%lld %d %s\n",
+				get_time() - thread->philo->time_start, thread->id + 1, log);
 	}
-	if (!check_philo(philo, av))
-		return (0);
-	create_thread(philo);
-	return (0);
+	pthread_mutex_unlock(&thread->philo->m_is_dead);
 }

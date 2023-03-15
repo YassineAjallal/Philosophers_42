@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:42:07 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/14 17:04:26 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/15 12:43:16 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	one_philo(t_details *thread)
 	if (thread->philo->nb_philo == 1)
 	{
 		pthread_mutex_lock(&thread->philo->fork[thread->id]);
-		printf("%lld %d has taken a fork\n",
-			get_time() - thread->philo->time_start, thread->id + 1);
+		print_log(thread, "has taken a fork");
 		own_sleep(thread->philo->time_die);
 		pthread_mutex_lock(&thread->philo->m_is_dead);
 		thread->philo->is_died = 1;
@@ -34,14 +33,11 @@ int	mutex_lock(t_details *thread)
 	if (!one_philo(thread))
 		return (0);
 	pthread_mutex_lock(&thread->philo->fork[thread->id]);
-	printf("%lld %d has taken a fork\n",
-		get_time() - thread->philo->time_start, thread->id + 1);
+	print_log(thread, "has taken a fork");
 	pthread_mutex_lock(&thread->philo->fork[(thread->id + 1)
 		% thread->philo->nb_philo]);
-	printf("%lld %d has taken a fork\n",
-		get_time() - thread->philo->time_start, thread->id + 1);
-	printf("%lld %d is eating\n",
-		get_time() - thread->philo->time_start, thread->id + 1);
+	print_log(thread, "has taken a fork");
+	print_log(thread, "is eating");
 	pthread_mutex_lock(&thread->philo->m_last_eat_time);
 	thread->last_eat_time = get_time();
 	pthread_mutex_unlock(&thread->philo->m_last_eat_time);
