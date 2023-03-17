@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 12:58:20 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/11 19:00:16 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:40:41 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	own_sleep(int time_to_sleep)
 	curr = get_time();
 	while (1)
 	{
+		usleep(100);
 		if (get_time() - curr == time_to_sleep)
 			break ;
 	}
