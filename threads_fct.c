@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/17 19:35:00 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/17 20:09:40 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	init_mutex(t_philo *philo)
 int	init_threads(t_philo *philo, t_details *threads)
 {
 	int	i;
-	long long time;
+	long long start_eat_time;
 
 	i = 0;
-	time = get_time();
+	start_eat_time = get_time();
 	while (i < philo->nb_philo)
 	{
 		threads[i].id = i;
-		threads[i].last_eat_time = time;
+		threads[i].last_eat_time = start_eat_time;
 		threads[i].nb_eat = 0;
 		threads[i].philo = philo;
 		threads[i].philo->is_died = 0;
