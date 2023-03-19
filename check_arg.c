@@ -6,12 +6,13 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:37 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/15 12:31:13 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/19 13:34:19 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// check is thre is a digit in arguments
 int check_arg(char **av)
 {
 	int i;
@@ -32,6 +33,7 @@ int check_arg(char **av)
 	return (1);	
 }
 
+// fill the philo struct
 int	init_philo(t_philo *philo, char **av)
 {
 	if (!check_arg(av))
@@ -48,6 +50,7 @@ int	init_philo(t_philo *philo, char **av)
 	return (1);
 }
 
+// check if all argument a non null positive digits
 int	check_philo(t_philo *philo, char **av)
 {
 	if (!init_philo(philo, av))
