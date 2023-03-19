@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/17 19:39:53 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/19 11:23:03 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@ void	*simulation_fct(void *p)
 	t_details	*thread;
 
 	thread = (t_details *)p;
-	if ((thread->id) % 2 == 0)
+	if ((thread->id + 1) % 2 == 0)
 		usleep(1500);
 	if (!one_philo(thread))
 		return (0);
 	while (1)
 	{
+		// usleep(100);
 		if (!death_checker(thread))
-			break ;
+			return (NULL);
 		if (!mutex_lock(thread))
-			break ;
+			return (NULL);
 		if (!eat_checker(thread))
-			break ;
+			return (NULL);
 		print_log(thread, "is sleeping");
 		own_sleep(thread->philo->time_sleep);
 		print_log(thread, "is thinking");
@@ -60,7 +61,6 @@ int	create_thread(t_philo *philo)
 	{
 		if (pthread_join(threads[i].thread, NULL) != 0)
 			return (0);
-		usleep(1000);
 	}
 	return (1);
 }

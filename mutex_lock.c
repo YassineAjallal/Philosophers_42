@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:42:07 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/17 19:26:10 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/19 11:33:56 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,18 @@ int	one_philo(t_details *thread)
 int	mutex_lock(t_details *thread)
 {
 	pthread_mutex_lock(&thread->philo->fork[thread->id]);
+	print_log(thread, "has taken a fork");
 	pthread_mutex_lock(&thread->philo->fork[(thread->id + 1)
 		% thread->philo->nb_philo]);
-	print_log(thread, "has taken a fork");
 	print_log(thread, "has taken a fork");
 	print_log(thread, "is eating");
 	pthread_mutex_lock(&thread->philo->m_last_eat_time);
 	thread->last_eat_time = get_time();
 	pthread_mutex_unlock(&thread->philo->m_last_eat_time);
-	own_sleep(thread->philo->time_eat);
-
 	pthread_mutex_lock(&thread->philo->m_nb_eat);
 	thread->nb_eat++;
 	pthread_mutex_unlock(&thread->philo->m_nb_eat);
-
+	own_sleep(thread->philo->time_eat);
 	pthread_mutex_unlock(&thread->philo->fork[thread->id]);
 	pthread_mutex_unlock(&thread->philo->fork[(thread->id + 1)
 		% thread->philo->nb_philo]);
