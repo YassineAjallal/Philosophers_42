@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   mutex_destroy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/20 15:00:08 by yajallal         ###   ########.fr       */
+/*   Created: 2023/03/20 14:34:24 by yajallal          #+#    #+#             */
+/*   Updated: 2023/03/20 14:38:36 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+void mutex_destroy(t_philo *philo)
 {
-	t_philo	*philo;
+	int i;
 
-	philo = malloc(sizeof(t_philo));
-	if (!philo)
-		return (0);
-	if (ac != 6 && ac != 5)
+	i = 0;
+	while(i < philo->nb_philo)
 	{
-		printf("Error\nBad usage\n");
-		return (0);
+		pthread_mutex_destroy(&philo->fork[i]);
+		i++;
 	}
-	if (!check_philo(philo, av))
-		return (0);
-	if (!create_thread(philo))
-		return (0);
-	return (0);
+	pthread_mutex_destroy(&philo->m_is_dead);
+	pthread_mutex_destroy(&philo->m_is_finish);
+	pthread_mutex_destroy(&philo->m_last_eat_time);
+	pthread_mutex_destroy(&philo->m_nb_eat);
 }

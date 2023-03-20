@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/19 13:37:47 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:55:20 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 
 int	init_mutex(t_philo *philo)
 {
+	int i;
+
+	i = 0;
+
+	while (i < philo->nb_philo)
+	{
+		if (pthread_mutex_init(&philo->fork[i], NULL) != 0)
+			return (0);
+		i++;
+	}
 	if (pthread_mutex_init(&philo->m_is_dead, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(&philo->m_is_finish, NULL) != 0)
@@ -38,10 +48,10 @@ int	init_threads(t_philo *philo, t_details *threads)
 		threads[i].philo = philo;
 		threads[i].philo->is_died = 0;
 		threads[i].is_finish = 0;
-		if (pthread_mutex_init(&philo->fork[i], NULL) != 0)
-			return (0);
 		i++;
 	}
+	if (!init_mutex(philo))
+		return (0);
 	return (1);
 }
 

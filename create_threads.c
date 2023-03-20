@@ -6,12 +6,13 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/19 13:35:08 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:57:50 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// handle the one philo case
 int	one_philo(t_details *thread)
 {
 	if (thread->philo->nb_philo == 1)
@@ -28,6 +29,7 @@ int	one_philo(t_details *thread)
 	return (1);
 }
 
+// handle eating
 int	mutex_lock(t_details *thread)
 {
 	pthread_mutex_lock(&thread->philo->fork[thread->id]);
@@ -60,7 +62,6 @@ void	*simulation_fct(void *p)
 		return (0);
 	while (1)
 	{
-		// usleep(100);
 		if (!death_checker(thread))
 			return (NULL);
 		if (!mutex_lock(thread))
@@ -85,8 +86,6 @@ int	create_thread(t_philo *philo)
 	if (!threads || !philo->fork)
 		return (0);
 	if (!init_threads(philo, threads))
-		return (0);
-	if (!init_mutex(philo))
 		return (0);
 	while (++i < philo->nb_philo)
 		if (pthread_create(&threads[i].thread, NULL,
