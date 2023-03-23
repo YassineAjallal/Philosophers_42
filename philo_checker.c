@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:29:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 17:03:27 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:08:24 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	eat_checker(t_details *thread)
 int	check_nb_eat(t_details *threads)
 {
 	int	i;
+
 	i = 0;
 	while (i < threads->philo->nb_philo)
 	{

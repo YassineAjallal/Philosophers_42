@@ -6,17 +6,17 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:37 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/19 13:34:19 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:06:52 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 // check is thre is a digit in arguments
-int check_arg(char **av)
+int	check_arg(char **av)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (av[i])
@@ -30,7 +30,7 @@ int check_arg(char **av)
 		}
 		i++;
 	}
-	return (1);	
+	return (1);
 }
 
 // fill the philo struct

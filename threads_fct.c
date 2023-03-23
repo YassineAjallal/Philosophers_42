@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 16:53:04 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:19:20 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	init_mutex(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
 	while (i < philo->nb_philo)
 	{
 		if (pthread_mutex_init(&philo->fork[i], NULL) != 0)
@@ -28,20 +27,13 @@ int	init_mutex(t_philo *philo)
 		return (0);
 	if (pthread_mutex_init(&philo->m_eat, NULL) != 0)
 		return (0);
-	// if (pthread_mutex_init(&philo->m_is_finish, NULL) != 0)
-	// 	return (0);
-	// if (pthread_mutex_init(&philo->m_last_eat_time, NULL) != 0)
-	// 	return (0);
-	// if (pthread_mutex_init(&philo->m_nb_eat, NULL) != 0)
-	// 	return (0);
-	
 	return (1);
 }
 
 int	init_threads(t_philo *philo, t_details *threads)
 {
-	int	i;
-	long long start_eat_time;
+	int			i;
+	long long	start_eat_time;
 
 	i = 0;
 	start_eat_time = get_time();
@@ -60,21 +52,29 @@ int	init_threads(t_philo *philo, t_details *threads)
 	return (1);
 }
 
+int	set_dead(t_details *thread)
+{
+	if (get_time() - thread->last_eat_time >= thread->philo->time_die)
+	{
+		print_log(thread, "died");
+		pthread_mutex_lock(&thread->philo->m_is_dead);
+		thread->philo->is_died = 1;
+		pthread_mutex_unlock(&thread->philo->m_is_dead);
+		return (0);
+	}
+	return (1);
+}
+
 int	stop_threads(t_details *threads)
 {
 	int	i;
-	int nb;
-	nb = threads[0].philo->nb_philo;
+
 	i = 0;
-	while (i < nb)
+	while (i < threads[0].philo->nb_philo)
 	{
 		pthread_mutex_lock(&threads[i].philo->m_eat);
-		if (get_time() - threads[i].last_eat_time >= threads[i].philo->time_die)
+		if (!set_dead(&threads[i]))
 		{
-			print_log(&threads[i], "died");
-			pthread_mutex_lock(&threads[i].philo->m_is_dead);
-			threads[i].philo->is_died = 1;
-			pthread_mutex_unlock(&threads[i].philo->m_is_dead);
 			pthread_mutex_unlock(&threads[i].philo->m_eat);
 			return (0);
 		}
@@ -85,7 +85,7 @@ int	stop_threads(t_details *threads)
 		}
 		pthread_mutex_unlock(&threads[i].philo->m_eat);
 		i++;
-		if (i == nb)
+		if (i == threads[0].philo->nb_philo)
 			i = 0;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 16:53:30 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:22:17 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	*simulation_fct(void *p)
 
 	thread = (t_details *)p;
 	if ((thread->id + 1) % 2 == 0)
-		usleep(1500);
+		usleep(1000);
 	if (!one_philo(thread))
 		return (0);
 	while (1)
