@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:57:55 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 17:22:17 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 21:56:10 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,27 @@ int	create_thread(t_philo *philo)
 	if (!threads || !philo->fork)
 		return (0);
 	if (!init_threads(philo, threads))
+	{
+		free(threads);
 		return (0);
+	}
 	while (++i < philo->nb_philo)
 		if (pthread_create(&threads[i].thread, NULL,
 				simulation_fct, &threads[i]) != 0)
+		{
+			free(threads);
 			return (0);
+		}
 	stop_threads(threads);
 	i = -1;
 	while (++i < philo->nb_philo)
 	{
 		if (pthread_join(threads[i].thread, NULL) != 0)
+		{
+			free(threads);
 			return (0);
+		}
 	}
+	free(threads);
 	return (1);
 }

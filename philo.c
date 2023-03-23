@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:06:59 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/20 15:00:08 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 21:57:07 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int ac, char **av)
 	}
 	if (!check_philo(philo, av))
 		return (0);
-	if (!create_thread(philo))
-		return (0);
+	create_thread(philo);
+	free(philo->fork);
+	free(philo);
 	return (0);
 }
