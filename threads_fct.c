@@ -6,29 +6,11 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 17:19:20 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 22:34:25 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	init_mutex(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->nb_philo)
-	{
-		if (pthread_mutex_init(&philo->fork[i], NULL) != 0)
-			return (0);
-		i++;
-	}
-	if (pthread_mutex_init(&philo->m_is_dead, NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(&philo->m_eat, NULL) != 0)
-		return (0);
-	return (1);
-}
 
 int	init_threads(t_philo *philo, t_details *threads)
 {
@@ -50,6 +32,30 @@ int	init_threads(t_philo *philo, t_details *threads)
 	if (!init_mutex(philo))
 		return (0);
 	return (1);
+}
+
+void	*start_thread(void *p)
+{
+	t_details	*thread;
+
+	thread = (t_details *)p;
+	if ((thread->id + 1) % 2 == 0)
+		usleep(1000);
+	if (!one_philo(thread))
+		return (0);
+	while (1)
+	{
+		if (!death_checker(thread))
+			return (NULL);
+		if (!mutex_lock(thread))
+			return (NULL);
+		if (!eat_checker(thread))
+			return (NULL);
+		print_log(thread, "is sleeping");
+		own_sleep(thread->philo->time_sleep);
+		print_log(thread, "is thinking");
+	}
+	return (NULL);
 }
 
 int	set_dead(t_details *thread)

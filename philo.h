@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 17:08:05 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 22:42:05 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,38 +43,37 @@ typedef struct s_details {
 	t_philo		*philo;
 }	t_details;
 
-// check_arg.c
-int			check_arg(char **av);
-int			init_philo(t_philo *philo, char **av);
-int			check_philo(t_philo *philo, char **av);
+//  create_threads.c
+int			thread_join(t_details *threads, t_philo *philo);
+int			thread_create(t_details *threads, t_philo *philo);
+int			ft_thread(t_philo *philo);
 
-// create_threads.c
-void		*simulation_fct(void *p);
-int			create_thread(t_philo *philo);
-
-// mutex_lock.c
-int			one_philo(t_details *thread);
+// mutex.c
+int			init_mutex(t_philo *philo);
 int			mutex_lock(t_details *thread);
+void		mutex_destroy(t_philo *philo);
 
 // philo_checker.c
 int			death_checker(t_details *thread);
 int			eat_checker(t_details *thread);
 int			check_nb_eat(t_details *threads);
 
+// philo_fct.c
+int			check_arg(char **av);
+int			init_philo(t_philo *philo, char **av);
+int			check_philo(t_philo *philo, char **av);
+int			one_philo(t_details *thread);
+
 // threads_fct.c
-int			init_mutex(t_philo *philo);
 int			init_threads(t_philo *philo, t_details *threads);
+void		*start_thread(void *p);
+int			set_dead(t_details *thread);
 int			stop_threads(t_details *threads);
 
-// print_log
+// tools.c
 void		print_log(t_details *thread, char *log);
-
-// time.c
+int			ft_isdigit(int c);
+int			ft_atoi(char *str);
 long long	get_time(void);
 void		own_sleep(int time_to_sleep);
-
-// tools.c
-int			ft_atoi(char *str);
-int			ft_isdigit(int c);
-
 #endif

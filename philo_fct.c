@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_arg.c                                        :+:      :+:    :+:   */
+/*   philo_fct.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:37 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 17:06:52 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 22:35:31 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,22 @@ int	check_philo(t_philo *philo, char **av)
 	if (philo->time_die <= 0 || philo->time_eat <= 0
 		|| philo->time_sleep <= 0)
 		return (0);
+	return (1);
+}
+
+// handle the one philo case
+int	one_philo(t_details *thread)
+{
+	if (thread->philo->nb_philo == 1)
+	{
+		pthread_mutex_lock(&thread->philo->fork[thread->id]);
+		print_log(thread, "has taken a fork");
+		own_sleep(thread->philo->time_die);
+		pthread_mutex_lock(&thread->philo->m_is_dead);
+		thread->philo->is_died = 1;
+		pthread_mutex_unlock(&thread->philo->m_is_dead);
+		pthread_mutex_unlock(&thread->philo->fork[thread->id]);
+		return (0);
+	}
 	return (1);
 }
