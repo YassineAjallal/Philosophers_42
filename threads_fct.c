@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/20 14:55:20 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:53:04 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,15 @@ int	init_mutex(t_philo *philo)
 	}
 	if (pthread_mutex_init(&philo->m_is_dead, NULL) != 0)
 		return (0);
-	if (pthread_mutex_init(&philo->m_is_finish, NULL) != 0)
+	if (pthread_mutex_init(&philo->m_eat, NULL) != 0)
 		return (0);
-	if (pthread_mutex_init(&philo->m_last_eat_time, NULL) != 0)
-		return (0);
+	// if (pthread_mutex_init(&philo->m_is_finish, NULL) != 0)
+	// 	return (0);
+	// if (pthread_mutex_init(&philo->m_last_eat_time, NULL) != 0)
+	// 	return (0);
+	// if (pthread_mutex_init(&philo->m_nb_eat, NULL) != 0)
+	// 	return (0);
+	
 	return (1);
 }
 
@@ -63,19 +68,22 @@ int	stop_threads(t_details *threads)
 	i = 0;
 	while (i < nb)
 	{
-		pthread_mutex_lock(&threads[i].philo->m_last_eat_time);
+		pthread_mutex_lock(&threads[i].philo->m_eat);
 		if (get_time() - threads[i].last_eat_time >= threads[i].philo->time_die)
 		{
 			print_log(&threads[i], "died");
 			pthread_mutex_lock(&threads[i].philo->m_is_dead);
 			threads[i].philo->is_died = 1;
 			pthread_mutex_unlock(&threads[i].philo->m_is_dead);
-			pthread_mutex_unlock(&threads[i].philo->m_last_eat_time);
+			pthread_mutex_unlock(&threads[i].philo->m_eat);
 			return (0);
 		}
 		else if (check_nb_eat(threads))
+		{
+			pthread_mutex_unlock(&threads[i].philo->m_eat);
 			return (0);
-		pthread_mutex_unlock(&threads[i].philo->m_last_eat_time);
+		}
+		pthread_mutex_unlock(&threads[i].philo->m_eat);
 		i++;
 		if (i == nb)
 			i = 0;
