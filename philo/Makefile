@@ -1,5 +1,5 @@
 .PHONY: clean all re fclean
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread
 NAME = philo
 SRC = create_threads.c mutex.c philo.c philo_checker.c philo_fct.c threads_fct.c tools.c
 
@@ -7,8 +7,8 @@ OBJ = $(SRC:.c=.o)
 
 all: $(OBJ) $(NAME)
 
-$(NAME):
-	@gcc $(CFLAGS) -o $(NAME) $(SRC)
+$(NAME): $(OBJ)
+	@CC $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "done"
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 18:35:40 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 22:34:25 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:32:38 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ int	set_dead(t_details *thread)
 {
 	if (get_time() - thread->last_eat_time >= thread->philo->time_die)
 	{
-		print_log(thread, "died");
 		pthread_mutex_lock(&thread->philo->m_is_dead);
+		printf("%lld %d died\n", get_time() - thread->philo->time_start,
+			thread->id + 1);
 		thread->philo->is_died = 1;
 		pthread_mutex_unlock(&thread->philo->m_is_dead);
 		return (0);
