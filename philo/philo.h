@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
+/*   By: yajallal <yajallal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:02:22 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/24 17:41:12 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:46:05 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_details {
 }	t_details;
 
 //  create_threads.c
-int			thread_join(t_details *threads, t_philo *philo);
+int			thread_detach(t_details *threads, t_philo *philo);
 int			thread_create(t_details *threads, t_philo *philo);
 int			ft_thread(t_philo *philo);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_fct.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yajallal < yajallal@student.1337.ma >      +#+  +:+       +#+        */
+/*   By: yajallal <yajallal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 12:14:37 by yajallal          #+#    #+#             */
-/*   Updated: 2023/03/23 22:35:31 by yajallal         ###   ########.fr       */
+/*   Updated: 2023/04/10 22:21:05 by yajallal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ int	init_philo(t_philo *philo, char **av)
 	philo->time_eat = ft_atoi(av[3]);
 	philo->time_sleep = ft_atoi(av[4]);
 	if (av[5])
+	{
 		philo->nb_times = ft_atoi(av[5]);
+		if (philo->nb_times <= 0)
+			return (0);
+	}
 	else
 		philo->nb_times = -1;
 	return (1);
